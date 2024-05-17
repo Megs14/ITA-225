@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Freeman&display=swap" rel="stylesheet">     
+<title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav class="z-10 fixed w-full top-0 bg-[#1E5128] border-gray-200 px-4 lg:px-6 py-2.5">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                <img class="w-20" src="img/cspc.png" alt="" srcset="">
+                <a href="index.html" class="flex items-center">
+                    <span class="self-center text-6xl font-Freeman whitespace-nowrap text-[#D8E9A8]">StatWise</span>
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-white rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="calculator.html"
+                                class="block py-2 pr-4 pl-3 text-[#D8E9A8] font-DM text-2xl border-b-2 border-transparent hover:border-[#D8E9A8] transition duration-300"
+                                aria-current="page">Statistical Calculator</a>
+                        </li>
+                        <li>
+                            <a href="simulations.html"
+                                class="block py-2 pr-4 pl-3 text-[#D8E9A8] font-DM text-2xl border-b-2 border-transparent hover:border-[#D8E9A8] transition duration-300"
+                                aria-current="false">Simulations</a>
+                        </li>
+                        <img class="w-16 relative left-[100px]" src="img/ccslogo.png" alt="">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flex space-x-6 p-10 mt-20 bg-[#D8E9A8] h-fit">
+        <!-- Calculator Section -->
+        <div class="w-1/2 bg-white p-8 rounded-lg shadow-lg h-fit">
+          <h2 class="text-2xl font-bold mb-6 text-center font-Orbitron">Statistical Calculator</h2>
+    
+          <!-- Chart -->
+          <canvas id="dataChart" class="mb-6"></canvas>
+    
+          <div id="input-container">
+            <label class="block text-sm font-medium text-gray-700">Enter numbers:</label>
+            <div class="flex space-x-2 mt-1">
+              <input type="number" class="number-input mt-1 p-2 border border-gray-300 rounded-md w-full">
+            </div>
+          </div>
+          <button onclick="addInput()" class="mt-4 bg-green-500 text-white py-2 px-4 rounded transition duration-200 hover:bg-green-600">
+            Add Another Number
+          </button>
+          <button onclick="calculate()" class="mt-4 ml-2 bg-[#1E5128] text-white py-2 px-4 rounded transition duration-200 hover:bg-green-600">
+            Calculate
+          </button>
+          <div class="mt-6">
+            <p class="text-lg font-Orbitron"><strong>Mean:</strong> <span id="mean"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Median (Q2):</strong> <span id="median"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Mode:</strong> <span id="mode"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Minimum:</strong> <span id="min"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Maximum:</strong> <span id="max"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Count:</strong> <span id="count"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Sum:</strong> <span id="sum"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Q1:</strong> <span id="q1"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Q3:</strong> <span id="q3"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Interquartile Range (IQR):</strong> <span id="iqr"></span></p>
+            <p class="text-lg font-Orbitron"><strong>Outliers:</strong> <span id="outliers"></span></p>
+          </div>
+          <canvas id="quartilesChart" class="mt-6"></canvas>
+        </div>
+    
+        <!-- Info Section -->
+        <div class="w-1/2 bg-white p-8 rounded-lg shadow-lg h-fit">
+          <h2 class="text-2xl font-bold mb-6 text-center font-Orbitron">Mean, Median, and Mode</h2>
+    
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold font-Orbitron">Mean</h3>
+            <p>The mean is the average of a set of numbers, calculated by dividing the sum of all the numbers by the count of the numbers.</p>
+            <p class="mt-4">To compute the mean (average) of a set of numbers, follow these steps:</p>
+            <p><span class="font-bold">Add Up</span>: Add all the numbers together.</p>
+            <p><span class="font-bold">Count</span> : Count how many numbers are in the set.</p>
+            <p><span class="font-bold">Divide</span>: Divide the sum by the count of numbers.</p>
+            <p class="mt-2 font-Orbitron text-center">Mean = (Σxi) / N</p>
+          </div>
+    
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold font-Orbitron">Median</h3>
+            <p>The median is the middle value in a list of numbers, which divides the data into two halves. For an even number of observations, it is the average of the two middle values.</p>
+            <p class="mt-4">To find the median (middle value) of a set of numbers, do the following:</p>
+            <p><span class="font-bold">Sort</span>: Arrange the numbers in ascending order.</p>
+            <p><span class="font-bold">Find Middle</span>: If the count of numbers is odd, the median is the middle number. If it's even, the median is the average of the two middle numbers.</p>
+            <p class="mt-2 font-Orbitron text-center">Median (Q2) = Middle value (or average of two middle values) when numbers are sorted</p>
+          </div>
+    
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold font-Orbitron">Mode</h3>
+            <p class="text-wrap">The mode is the number that appears most frequently in a set of numbers.</p>
+            <p class="mt-4">To determine the mode (most frequent number) in a set of numbers:</p>
+            <p><span class="font-bold">Count Occurrences:</span>: Count how many times each number appears in the set.</p>
+            <p><span class="font-bold">Find Maximum</span> : Identify the number(s) with the highest frequency. These are the mode(s).</p>
+            <p class="mt-2 font-Orbitron text-center">Mode = Most frequently occurring value</p>
+          </div>
+        </div>
+      </div>
+      <footer class="bg-[#1E5128] border-gray-200 px-4 lg:px-6 py-2.5">
+        <div class="flex justify-between items-center mx-auto max-w-screen-xl">
+           <span class="text-sm text-[#D8E9A8]">© 2023 <a href="https://flowbite.com/" class="hover:underline">ITA 225 - Probability and Statistics
+                 </a>. All Rights Reserved.</span>
+           <ul class="flex flex-wrap items-center text-sm font-medium text-[#D8E9A8]">
+              <li>
+                 <a href="calculator.html"
+                    class="block py-2 pr-4 pl-3 border-b-2 border-transparent hover:border-[#D8E9A8] transition duration-300">Calculator</a>
+              </li>
+              <li>
+                 <a href="simulations.html"
+                    class="block py-2 pr-4 pl-3 border-b-2 border-transparent hover:border-[#D8E9A8] transition duration-300">Simulations</a>
+              </li>
+           </ul>
+        </div>
+     </footer>
+      <script>
+        let chart;
+        let quartilesChart;
+    
+        function addInput() {
+          const container = document.getElementById('input-container');
+          const newInput = document.createElement('input');
+          newInput.type = 'number';
+          newInput.className = 'number-input mt-1 p-2 border border-gray-300 rounded-md w-full';
+          container.appendChild(newInput);
+        }
+    
+        function calculate() {
+          let inputFields = document.querySelectorAll('.number-input');
+          let numbers = Array.from(inputFields).map(input => Number(input.value)).filter(n => !isNaN(n));
+          
+          if (numbers.length === 0) {
+            alert("Please enter at least one number.");
+            return;
+          }
+    
+          // Mean calculation
+          const sum = numbers.reduce((a, b) => a + b, 0);
+          const mean = sum / numbers.length;
+    
+          // Median calculation
+          numbers.sort((a, b) => a - b);
+          const median = getPercentile(numbers, 50);
+    
+          // Mode calculation
+          const modeMap = {};
+          let maxCount = 0, mode = '';
+          numbers.forEach(num => {
+            modeMap[num] = (modeMap[num] || 0) + 1;
+            if (modeMap[num] > maxCount) {
+              maxCount = modeMap[num];
+              mode = num;
+            }
+          });
+    
+          // Minimum and maximum
+          const min = numbers[0];
+          const max = numbers[numbers.length - 1];
+    
+          // Count
+          const count = numbers.length;
+    
+          // Quartile calculations
+          const q1 = getPercentile(numbers, 25);
+          const q2 = median; // Median is Q2
+          const q3 = getPercentile(numbers, 75);
+          const iqr = q3 - q1;
+    
+          // Outliers calculation
+          const outliers = numbers.filter(num => num < q1 - 1.5 * iqr || num > q3 + 1.5 * iqr);
+    
+          // Update display values
+          document.getElementById('mean').innerText = mean.toFixed(2);
+          document.getElementById('median').innerText = median;
+          document.getElementById('mode').innerText = mode;
+          document.getElementById('min').innerText = min;
+          document.getElementById('max').innerText = max;
+          document.getElementById('count').innerText = count;
+          document.getElementById('sum').innerText = sum;
+          document.getElementById('q1').innerText = q1;
+          document.getElementById('q3').innerText = q3;
+          document.getElementById('iqr').innerText = iqr;
+          document.getElementById('outliers').innerText = outliers.join(', ');
+    
+          // Update charts
+          updateChart(mean, median, mode);
+          updateQuartilesChart(q1, q2, q3);
+        }
+    
+        function getPercentile(arr, percentile) {
+          const index = (percentile / 100) * arr.length;
+          if (Math.floor(index) === index) {
+            return (arr[index - 1] + arr[index]) / 2;
+          } else {
+            return arr[Math.floor(index)];
+          }
+        }
+    
+        function updateChart(mean, median, mode) {
+          const ctx = document.getElementById('dataChart').getContext('2d');
+          if (chart) {
+            chart.destroy();
+          }
+    
+          chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['Mean', 'Median (Q2)', 'Mode'],
+              datasets: [{
+                label: 'Value',
+                data: [mean, median, mode],
+                backgroundColor: '#4E9F3D',
+                borderColor: '#1E5128',
+                borderWidth: 2,
+                fill: false
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+    
+        function updateQuartilesChart(q1, q2, q3) {
+          const ctx = document.getElementById('quartilesChart').getContext('2d');
+          if (quartilesChart) {
+            quartilesChart.destroy();
+          }
+    
+          quartilesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['Q1', 'Q2 (Median)', 'Q3'],
+              datasets: [{
+                label: 'Quartiles',
+                data: [q1, q2, q3],
+                backgroundColor: '#4E9F3D',
+                borderColor: '#1E5128',
+                borderWidth: 2,
+                fill: false
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+      </script>
+</body>
+
+</html>
